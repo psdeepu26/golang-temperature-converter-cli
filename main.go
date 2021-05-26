@@ -16,6 +16,7 @@ var err error
 
 var errInvalidArguments = errors.New("Invalid arguments")
 var errReadingInput = errors.New("Error reading input")
+var wrongSelection = errors.New("Wrong Selection")
 
 func main() {
 	// fmt.Println(len(os.Args))
@@ -24,6 +25,11 @@ func main() {
 	}
 
 	originUnit = strings.ToUpper(os.Args[1])
+
+	if (originUnit != "C" && originUnit != "F") {
+		fmt.Println(wrongSelection)
+		os.Exit(1)
+	}
 
 	for {
 		fmt.Print("What is the current temperature in " + originUnit + " ? ")
@@ -35,7 +41,9 @@ func main() {
 
 		if originUnit == "C" {
 			convertToFahrenheit(originValue)
-		}  else {
+		}  else if originUnit == "F" {
+			
+		} else {
 			convertToCelsius(originValue)
 		}
 
@@ -45,7 +53,7 @@ func main() {
 		if err !=nil {
 			printError(errReadingInput)
 		}
-		
+
 		if strings.TrimSpace(strings.ToUpper(shouldConvertAgain)) != "Y" {
 			fmt.Println("Good bye!")
 			break
